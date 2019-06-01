@@ -8,3 +8,13 @@ Jarvis March,120,10,Circle with min. hull pts %,0.00397801399230957
 Jarvis March,120,40,Circle with min. hull pts %,0.027998924255371094
 Jarvis March,120,70,Circle with min. hull pts %,0.03499317169189453
 Jarvis March,120,100,Circle with min. hull pts %,0.054027557373046875
+Graham Scan,120,10,Circle with min. hull pts %,0.004001140594482422
+Graham Scan,120,40,Circle with min. hull pts %,0.001983165740966797
+Graham Scan,120,70,Circle with min. hull pts %,0.0019953250885009766
+Graham Scan,120,100,Circle with min. hull pts %,0.000995635986328125
+Graham Scan,50,,Random Scatter,0.0010287761688232422
+Graham Scan,100,,Random Scatter,0.0019965171813964844
+Graham Scan,500,,Random Scatter,0.007003307342529297
+Graham Scan,1000,,Random Scatter,0.009998798370361328
+Graham Scan,100,3,Circle with min. hull pts %,0.03504323959350586
+Jarvis March,100,3,Circle with min. hull pts %,0.0009992122650146484

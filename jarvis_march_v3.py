@@ -199,22 +199,21 @@ def jarvis_march():
 		points = points_on_circumference_with_per((center_x,center_y),r, n, per_min_pt)
 
 
-
+	# Sample points for manual testing
 	# points = [(0, 3), (1, 1), (2, 2), (4, 4), (0, 0), (1, 2), (3, 1), (3, 3)]
 	# points =[(1,0),(0,-1),(-1,0),(0,1)]
 	# points = [(-25,-99),(37,-100),(-80,4),(-83,11),(12,-28)]
-	print('Per MIN pt',per_min_pt)
 
 
 
 	global P0
-	print('Points array',points)
+	# print('Points array',points)
 
 	start = time.time()
-	print('start time',start)
+	# print('start time',start)
 	P0 = point_with_min_y(points)
 	len_pts = len(points)
-	print('P0',P0)
+	# print('P0',P0)
 
 
 	pointOnHull = P0
@@ -240,12 +239,12 @@ def jarvis_march():
 			if hullV[-1] == None:
 				del hullV[-1]
 
-	print(hullV)
+	# print(hullV)
 
 
 	end = time.time()
-	print('end time',end)
-	print("Total execution time: {}".format(end-start))
+	# print('end time',end)
+	# print("Total execution time: {}".format(end-start))
 
 
 

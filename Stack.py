@@ -19,7 +19,7 @@ class Stack:
 		return self.__list[len(self.__list)-2]
 
 	def print_all(self):
-		print('The no. of elements in stack S : {}'.format(len(self.__list)))
+		# print('The no. of elements in stack S : {}'.format(len(self.__list)))
 		return self.__list
 
 	def get_stack_len(self):
