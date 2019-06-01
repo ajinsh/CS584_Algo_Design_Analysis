@@ -1,0 +1,10 @@
+Algo,Size of Input,Min. Hull Pts Per,Type of Input,Timing
+Jarvis March,50,,Random Scatter,0.0019953250885009766
+Jarvis March,50,,Random Scatter,0.0024776458740234375
+Jarvis March,100,,Random Scatter,0.0029952526092529297
+Jarvis March,500,,Random Scatter,0.041994571685791016
+Jarvis March,1000,,Random Scatter,0.03495049476623535
+Jarvis March,120,10,Circle with min. hull pts %,0.00397801399230957
+Jarvis March,120,40,Circle with min. hull pts %,0.027998924255371094
+Jarvis March,120,70,Circle with min. hull pts %,0.03499317169189453
+Jarvis March,120,100,Circle with min. hull pts %,0.054027557373046875

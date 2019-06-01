@@ -56,22 +56,19 @@ def read_points():
 
 
 
-def create_export_files(n,input_choice,timing):
-	exists = os.path.isfile('analysis/results.csv')
+def create_export_files(n,input_choice,timing,min_hull_per):
+	exists = os.path.isfile('analysis/results_v2.csv')
 	if exists:
-		f = open('analysis/results.csv','a',newline='')
+		f = open('analysis/results_v2.csv','a',newline='')
 		results = csv.writer(f)
 	else:
-		os.mkdir('analysis')
-		f = open('analysis/results.csv','w',newline='')
+		# os.mkdir('analysis')
+		f = open('analysis/results_v2.csv','w',newline='')
 		results = csv.writer(f)
-		results.writerow(['Algo','Size of Input','Type of Input','Timing'])
+		results.writerow(['Algo','Size of Input','Min. Hull Pts Per','Type of Input','Timing'])
 
-	if input_choice == 1:
-		input_type = 'Random Scatter'
-	else:
-		input_type = 'Circle'
-	results.writerow(['Jarvis March',n,input_type,timing])
+
+	results.writerow(['Jarvis March',n,min_hull_per,input_choice,timing])
 
 
 
@@ -120,7 +117,7 @@ def points_on_circumference_with_per(center=(0, 0), r=50, n=100, per = 50):
 
 	return final_pts
 
-def show_convex_hull(points,hull_points = None):
+def show_convex_hull(points, input_choice, timing,percent_pts,size,hull_points = None):
 	for each in points:
 		plt.plot(each[0],each[1],'o-')
 
@@ -136,15 +133,17 @@ def show_convex_hull(points,hull_points = None):
 		last_coord = hull_pt_arr[len(hull_pt_arr)-1,:].reshape(1,2)
 
 		last_coord_arr = np.append(first_coord, last_coord, axis = 0)
-		plt.plot(last_coord_arr[:,0],last_coord_arr[:,1],'k-') 
+		plt.plot(last_coord_arr[:,0],last_coord_arr[:,1],'k-')
+		plt.title(label = 'For input : '+input_choice+percent_pts+' time taken = '+str(timing)+' ms\n'+'N='+str(size))
+	
+	plt.savefig('plots/'+'Jarvis_March_'+str(input_choice)+str(percent_pts)+'_N='+str(size)+'.png')
 	plt.show()
-
 
 
 
 def jarvis_march():
 
-	choice_of_input = input("Enter choice of random point distribution:\n1. Random scatter\n2. Circle\n3.Minimal Points on Circle\n")
+	choice_of_input = input("Enter choice of random point distribution:\n1. Random scatter\n2. Circle\n3. Minimal Points on Circle\n")
 
 	if choice_of_input == "1":
 
@@ -152,6 +151,7 @@ def jarvis_march():
 			try:
 				input_size = input("Enter the input size")
 				n=int(input_size)
+				per_min_pt = ''
 				break
 			except ValueError:
 				print("Enter integer value for input size")
@@ -169,7 +169,8 @@ def jarvis_march():
 				center_str = input("Enter comma seperated x and y co-ordinates")
 				center_str = center_str.split(",")
 				center_x = int(center_str[0])
-				center_y = int(center_str[1])		
+				center_y = int(center_str[1])
+				per_min_pt = ''		
 				break
 			except ValueError:
 				print("Enter integer value for input size/radius")
@@ -202,7 +203,7 @@ def jarvis_march():
 	# points = [(0, 3), (1, 1), (2, 2), (4, 4), (0, 0), (1, 2), (3, 1), (3, 3)]
 	# points =[(1,0),(0,-1),(-1,0),(0,1)]
 	# points = [(-25,-99),(37,-100),(-80,4),(-83,11),(12,-28)]
-
+	print('Per MIN pt',per_min_pt)
 
 
 
@@ -246,9 +247,20 @@ def jarvis_march():
 	print('end time',end)
 	print("Total execution time: {}".format(end-start))
 
-	show_convex_hull(points,hullV)
 
-	# create_export_files(n,int(choice_of_input),(end-start))
+
+	# if input_choice == 1:
+	# 	input_type = 'Random Scatter'
+	# elif input_choice == 2:
+	# 	input_type = 'Circle'
+	# elif input_choice == 3:
+	# 	input_type = 'Circle with min. hull pts'
+
+	input_choice_title = {1:'Random Scatter',2:'Circle',3:'Circle with min. hull pts %'}
+
+	show_convex_hull(points,input_choice_title[int(choice_of_input)],round(round((end-start),6)*1000,3),str(per_min_pt),n,hullV)
+
+	create_export_files(n,input_choice_title[int(choice_of_input)],(end-start),str(per_min_pt))
 
 if __name__ == '__main__':
 	jarvis_march()
