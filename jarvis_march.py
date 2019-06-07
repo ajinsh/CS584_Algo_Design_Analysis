@@ -1,12 +1,30 @@
-from Stack import Stack
+"""
+Author: Ajinkya Shinde
+Reference for Jarvis March Logic: https://en.wikipedia.org/wiki/Gift_wrapping_algorithm#Pseudocode
+"""
+
+# Import necessary packages
 from math import atan2, sqrt, pi, cos, sin
 import numpy as np
 import matplotlib.pyplot as plt
 import time
 import random
 import operator
+import os
+import csv
+
+
+global max_polar_angle
 
 def point_with_min_y(points):
+	"""Returns the point with minimum y co-ordinate and the 
+	leftmost incase of a tie from a set of points 	
+	
+	Input: points (array-type)
+
+	Output: P0(tuple)
+	"""
+
 	min_idx = None
 
 	for a,coord in enumerate(points):
@@ -27,85 +45,20 @@ def point_with_min_y(points):
 	return (P0_X,P0_Y)
 
 
-def euclidean_distance(points, ref_point):
-	euclidean_dist = []
-	for each in points:
-		eucl_dist = sqrt((ref_point[0]-each[0])**2 +(ref_point[1]-each[1])**2)
-		euclidean_dist.append(eucl_dist)
-	return np.asarray(euclidean_dist)
-
-
-def polar_angle(points, ref_point):
-	polar_angle = []
-
-	for each in points:
-		dy = each[1] - ref_point[1]
-		dx = each[0] - ref_point[0]
-
-		if atan2(dy, dx)*57.2958 <0:
-			polar_angle.append(360+(atan2(dy, dx)*57.2958))
-		else:
-			polar_angle.append(atan2(dy, dx)*57.2958)
-
-	return polar_angle
-
-
-def sort_by_polar_angle(points, ref_point):
-
-	print('points',points)
-	print('ref_point',ref_point)
-
-	p = polar_angle(points,ref_point)
-	polar_angle_arr = np.asarray(p)
-
-	print('polar_angle_arr',polar_angle_arr)
-	vals1, idx_start1, count1 = np.unique(polar_angle_arr, return_counts=True,
-	                                return_index=True)
-
-	idx_sorted_pang = np.argsort(polar_angle_arr)
-
-	sorted_polar_angle_arr = polar_angle_arr[idx_sorted_pang]
-	print('sorted_polar_angle_arr',sorted_polar_angle_arr) 
-	vals, idx_start, count = np.unique(sorted_polar_angle_arr, return_counts=True,
-	                                return_index=True)
-
-
-	res = np.split(idx_sorted_pang, idx_start[1:])
-	print(res)
-	#filter them with respect to their size, keeping only items occurring more than once
-	final_points =[]
-	for each in res:
-		# print("len(each)",len(each))
-		if len(each) > 1:
-			i = each.tolist()
-			check_points = []
-			for j in i:
-				check_points.append(points[j])
-			check_points_arr = np.asarray(check_points)
-			
-			max_far_idx = np.argmax(euclidean_distance(check_points,ref_point))
-			
-
-
-			final_points.append(check_points[max_far_idx])
-		elif len(each) == 1:
-			
-			final_points.append(points[each.tolist()[0]])
-
-	print('final_points',final_points)
-	return final_points
-
-
 
 def cross_product(p0,p1,p2):
-	print((p1[0]-p0[0])*(p2[1]-p0[1])-(p2[0]-p0[0])*(p1[1]-p0[1]))
-
-	return (((p1[0]-p0[0])*(p2[1]-p0[1]))-((p2[0]-p0[0])*(p1[1]-p0[1])))
-	
+	"""Returns the cross product of points of p0,p1 and p2.
+	The value returned is +ve, -ve or 0
+	"""
+	return (((p2[0]-p0[0])*(p1[1]-p0[1]))-((p1[0]-p0[0])*(p2[1]-p0[1])))
 
 
 
 def read_points():
+	"""
+	Work In Progress file to read points from text file
+	"""
+
 	points = []
 	f = open(r'sample_points.txt')
 	while True:
@@ -117,19 +70,56 @@ def read_points():
 
 		points.append((round(float(line[0]),3),round(float(line[1]),3))) 
 
-	print(points)
+	# print(points)
 	return points
 
 
 
-def create_random_points(n):
+def create_export_files(n,input_choice,timing,min_hull_per):
+	"""Creates folder analysis if not exists in current directory and creates 
+	results.csv file
 
+	Input: n(int): size of input
+	       input_choice(int): choice of input from menu
+	       timing(decimal): Timing in sec of algo
+	       min_hull_per(int): percentage of hull points from n
+
+	Output: Appends results of execution to the csv file
+	"""
+
+
+	exists = os.path.isfile('analysis/results.csv')
+	if exists:
+		f = open('analysis/results.csv','a',newline='')
+		results = csv.writer(f)
+	else:
+		# os.mkdir('analysis')
+		f = open('analysis/results.csv','w',newline='')
+		results = csv.writer(f)
+		results.writerow(['Algo','Size of Input','Min. Hull Pts Per','Type of Input','Timing'])
+
+
+	results.writerow(['Jarvis March',n,min_hull_per,input_choice,timing])
+
+
+
+
+def create_random_points(n):
+	"""Returns random points for input choice 1 from menu screen
+
+	Input:n(int) : size of input
+
+	Output: points array
+	"""
 	return [(random.randint(0,n),random.randint(0,n)) for i in range(n)]
 
 
 
 def points_on_circumference(center=(0, 0), r=50, n=100):
-    return [
+	""" Returns points around the boundary of circle with random distribution
+	 	It is called when choice of input entered is 2
+	"""
+	return [
         (
             center[0]+(cos(2 * pi / n * x) * r),  
             center[1] + (sin(2 * pi / n * x) * r) 
@@ -137,16 +127,52 @@ def points_on_circumference(center=(0, 0), r=50, n=100):
         ) for x in range(0, n + 1)]
 
 
-def remove_points(points, *pt):
-	for t in pt:
-		for p in points:
-			if t == p:
-				points.remove(p)
-	return points
+def points_on_circumference_with_per(center=(0, 0), r=50, n=100, per = 50):
+	"""Returns points around boundary of circle with random points distributed
+	 inside circle. It is called when choice of input entered is 3
+
+	 Input: center(tuple) : co-ordinates for center of circle
+	        r(int) : input for radius of circle
+	        n(int) : size of input
+	        per(int) : percentage of points of n that should be on boundary
+
+	Output : points array
+	"""
+
+	# circum_cnt is actual points on cicumference as a percentage of total 
+	# random points(n) = Percentage_of_Total_Points * n / 100
+	circum_cnt = round(per*n/100)
+	print('circum_cnt',circum_cnt)
+
+	# random_cnt is points inside the circle = Total random points - Points on Circum
+	random_cnt = n - circum_cnt
+
+	# print("random_cnt",random_cnt)
+	# print("circum_cnt",circum_cnt)
+	# Append points on circumference
+	final_pts = [
+		(
+			center[0]+(cos(2 * pi / circum_cnt * x) * r),  
+			center[1] + (sin(2 * pi / circum_cnt * x) * r) 
+		) for x in range(0, circum_cnt + 1)]
+
+	# Generate random points inside circle
+	# random points inside circle should have atleast 5 radius to be visible enough
+
+	for i in range(1,random_cnt+1):
+		# print(i)
+		# print('inside random pt Generate')
+		final_pts.append( (center[0]+  cos(2 * pi / circum_cnt * i) * random.randint(1,r-20),
+							center[1] + sin(2 * pi / circum_cnt * i) * random.randint(1,r-20)))
 
 
+	return final_pts
 
-def show_convex_hull(points,hull_points = None):
+def show_convex_hull(points, input_choice, timing,percent_pts,size,hull_points = None):
+	"""Returns plot with parameters from menu screen and saves the plot in /plots
+	directory
+	"""
+
 	for each in points:
 		plt.plot(each[0],each[1],'o-')
 
@@ -162,124 +188,122 @@ def show_convex_hull(points,hull_points = None):
 		last_coord = hull_pt_arr[len(hull_pt_arr)-1,:].reshape(1,2)
 
 		last_coord_arr = np.append(first_coord, last_coord, axis = 0)
-		plt.plot(last_coord_arr[:,0],last_coord_arr[:,1],'k-') 
+		plt.plot(last_coord_arr[:,0],last_coord_arr[:,1],'k-')
+		plt.title(label = 'For input : '+input_choice+percent_pts+' time taken = '+str(timing)+' s\n'+'N='+str(size))
+	
+	plt.savefig('plots/'+'Jarvis_March_'+str(input_choice)+str(percent_pts)+'_N='+str(size)+'.png')
 	plt.show()
 
 
+
 def jarvis_march():
+	### Menu Screen for Program Starts
+	choice_of_input = input("Enter choice of random point distribution:\n1. Random scatter\n2. Circle\n3. Minimal Points on Circle\n")
 
-	# choice_of_input = input("Enter choice of random point distribution:\n1. Random scatter\n2. Circle\n")
+	if choice_of_input == "1":
 
-	# if choice_of_input == "1":
+		while True:
+			try:
+				input_size = input("Enter the input size")
+				n=int(input_size)
+				per_min_pt = ''
+				break
+			except ValueError:
+				print("Enter integer value for input size")
 
-	# 	while True:
-	# 		try:
-	# 			input_size = input("Enter the input size")
-	# 			n=int(input_size)
-	# 			break
-	# 		except ValueError:
-	# 			print("Enter integer value for input size")
+		points = create_random_points(n)
 
-	# 	points = create_random_points(n)
+	elif choice_of_input == "2":
 
-	# elif choice_of_input == "2":
+		while True:
+			try:
+				input_size = input("Enter the input size")
+				n=int(input_size)
+				radius = input("Enter the radius")
+				r = int(radius)
+				center_str = input("Enter comma seperated x and y co-ordinates")
+				center_str = center_str.split(",")
+				center_x = int(center_str[0])
+				center_y = int(center_str[1])
+				per_min_pt = ''		
+				break
+			except ValueError:
+				print("Enter integer value for input size/radius")
 
-	# 	while True:
-	# 		try:
-	# 			input_size = input("Enter the input size")
-	# 			n=int(input_size)
-	# 			radius = input("Enter the radius")
-	# 			r = int(radius)
-	# 			center_str = input("Enter comma seperated x and y co-ordinates")
-	# 			center_str = center_str.split(",")
-	# 			center_x = int(center_str[0])
-	# 			center_y = int(center_str[1])		
-	# 			break
-	# 		except ValueError:
-	# 			print("Enter integer value for input size/radius")
+		points = points_on_circumference((center_x,center_y),r, n)
 
-	# 	points = points_on_circumference((center_x,center_y),r, n)
+	elif choice_of_input == "3":
 
-	points = [(0, 3), (1, 1), (2, 2), (4, 4), (0, 0), (1, 2), (3, 1), (3, 3)]
-	# points =[(1,0),(0,-1),(-1,0),(0,1)]
-	# points = [(-25,-99),(37,-100),(-80,4),(-83,11),(12,-28)]
+		while True:
+			try:
+				input_size = input("Enter the input size")
+				n=int(input_size)
+				per_min_pt = input("Enter percentage of points on hull")
+				per_min_pt = float(per_min_pt)
+				radius = input("Enter the radius")
+				r = int(radius)
+				center_str = input("Enter comma seperated x and y co-ordinates")
+				center_str = center_str.split(",")
+				center_x = int(center_str[0])
+				center_y = int(center_str[1])		
+				break
+
+			except ValueError:
+				print("Enter integer value for input size/radius")
+
+		points = points_on_circumference_with_per((center_x,center_y),r, n, per_min_pt)
+
+	### Menu Screen for Program Ends
 
 
-
-
+	# Set P0 to be global so that it can be access by other functions
 	global P0
-	print('Points array',points)
 
+
+	# Begin tracking the execution time
 	start = time.time()
-	print('start time',start)
+
+	# Find P0 with minimum y co-ordinate
 	P0 = point_with_min_y(points)
 
-	print('P0',P0)
+
+	len_pts = len(points)
+	pointOnHull = P0
+
+	hullV = [None] * len_pts
+
+	i=0
+	while True:
+		hullV[i] = pointOnHull
+		endpoint = points[0]
+
+		for j in range(1,n):
+			if (endpoint[0]==pointOnHull[0] and endpoint[1]==pointOnHull[1]) or cross_product(pointOnHull,points[j],endpoint) < 0:
+				endpoint = points[j]
+
+		i = i + 1
+		pointOnHull = endpoint
+
+		if endpoint[0] == P0[0] and endpoint[1] == P0[1]:
+			break
+
+	for i in range(n):
+			if hullV[-1] == None:
+				del hullV[-1]
 
 
 
-	s = Stack()
-	s.push(P0)
+	end = time.time()
 
 
-	ref_point = None
+	#helper dictionary for generating plots
+	input_choice_title = {1:'Random Scatter',2:'Circle',3:'Circle with min. hull pts %'}
 
-	while ref_point != P0:
 
-		if ref_point is None:
-			ref_point = P0
-		
-		p1_points = points.copy()
-		p1_points = remove_points(p1_points, ref_point)
+	##Call results function
+	show_convex_hull(points,input_choice_title[int(choice_of_input)],round((end-start),6),str(per_min_pt),n,hullV)
 
-		ccw_dict = {}
-		
-		print('p1_points',p1_points)
-		
-		p2_points = p1_points.copy()
-		
-		for p1 in p1_points:
-		
-			print('Inside p1')
-			print('p1',p1)
-			p2_points = remove_points(p2_points,p1)
-		
-			print('p2_points',p2_points)
-		
-			ccw_dict[p1] = 0
-			
-			for p2 in p2_points:
-		
-				print('Inside p2')
-				print('p2',p2)
-				print('ref_point',ref_point)
-				print('p1',p1)
-				print('cross_product(ref_point,p2,p1)',cross_product(ref_point,p2,p1))
-				if cross_product(ref_point,p2,p1) < 0:
-					# print('cross_product(ref_point,p2,p1)',cross_product(ref_point,p2,p1))
-					ccw_dict[p1]+=1
-
-		
-
-		print('ccw_dict',ccw_dict)
-		# print('break')
-		# print(max(ccw_dict.items(), key=operator.itemgetter(1))[0])
-		ref_point = max(ccw_dict.items(), key=operator.itemgetter(1))[0]
-		s.push(ref_point)
-		break
-
-	print('Printing hull')
-	print('points',points)
-	print(s.print_all())
-
-	show_convex_hull(points,s.print_all())
-
+	create_export_files(n,input_choice_title[int(choice_of_input)],(end-start),str(per_min_pt))
 
 if __name__ == '__main__':
-	# jarvis_march()
-	points = [(0, 3), (1, 1), (2, 2), (0, 0), (1, 2), (3, 3), (3, 1)]
-	sort_by_polar_angle(points,(4,4))
-	# cross_product((0,0),(0,3),(3,1))
-	# cross_product((0,0),(0,4),(4,3))
-	# show_convex_hull([(0,0),(0,4),(4,3)])
-	# show_convex_hull([(0,0),(0,3),(1,1)])
+	jarvis_march()

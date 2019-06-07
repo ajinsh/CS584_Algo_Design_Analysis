@@ -4,22 +4,29 @@ class Stack:
 		self.__list = []
 
 	def push(self, x):
+		"""Pushes the point on the stack
+		"""
 		self.__list.append(x)
 
 	def pop(self):
+		"""Pops the point from the Stack
+		"""
 		self.__list.pop()
 
 	def top(self):
-		# print(self.__list)
-		# print(type(self.__list))
-		# print(type(self.__list[len(self.__list)-1]))
+		"""Returns the point at 1st position from top of the Stack
+		"""
 		return self.__list[len(self.__list)-1]
 
 	def next_to_top(self):
+		"""Returns the point at 2nd position from top of the Stack
+		"""
+
 		return self.__list[len(self.__list)-2]
 
 	def print_all(self):
-		# print('The no. of elements in stack S : {}'.format(len(self.__list)))
+		"""Returns all the points on the Stack
+		"""
 		return self.__list
 
 	def get_stack_len(self):
@@ -29,6 +36,9 @@ class Stack:
 
 
 def initialize():
+	"""Tester function to simulate the working of Stack
+
+	"""
 	while True:
 		if input("Do you want to create a Stack?[Y|N]") == "Y":
 			break

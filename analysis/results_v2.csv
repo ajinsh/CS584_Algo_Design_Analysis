@@ -1,20 +1,67 @@
 Algo,Size of Input,Min. Hull Pts Per,Type of Input,Timing
-Jarvis March,50,,Random Scatter,0.0019953250885009766
-Jarvis March,50,,Random Scatter,0.0024776458740234375
-Jarvis March,100,,Random Scatter,0.0029952526092529297
-Jarvis March,500,,Random Scatter,0.041994571685791016
-Jarvis March,1000,,Random Scatter,0.03495049476623535
-Jarvis March,120,10,Circle with min. hull pts %,0.00397801399230957
-Jarvis March,120,40,Circle with min. hull pts %,0.027998924255371094
-Jarvis March,120,70,Circle with min. hull pts %,0.03499317169189453
-Jarvis March,120,100,Circle with min. hull pts %,0.054027557373046875
-Graham Scan,120,10,Circle with min. hull pts %,0.004001140594482422
-Graham Scan,120,40,Circle with min. hull pts %,0.001983165740966797
-Graham Scan,120,70,Circle with min. hull pts %,0.0019953250885009766
-Graham Scan,120,100,Circle with min. hull pts %,0.000995635986328125
-Graham Scan,50,,Random Scatter,0.0010287761688232422
-Graham Scan,100,,Random Scatter,0.0019965171813964844
-Graham Scan,500,,Random Scatter,0.007003307342529297
-Graham Scan,1000,,Random Scatter,0.009998798370361328
-Graham Scan,100,3,Circle with min. hull pts %,0.03504323959350586
-Jarvis March,100,3,Circle with min. hull pts %,0.0009992122650146484
+Graham Scan,1000,1,Circle with min. hull pts %,0.031300545
+Graham Scan,1000,5,Circle with min. hull pts %,0.046852112
+Graham Scan,1000,10,Circle with min. hull pts %,0.031166315
+Graham Scan,1000,40,Circle with min. hull pts %,0.031279802
+Graham Scan,1000,70,Circle with min. hull pts %,0.031150818
+Graham Scan,1000,100,Circle with min. hull pts %,0.031154394
+Graham Scan,10000,1,Circle with min. hull pts %,2.463014364
+Graham Scan,10000,5,Circle with min. hull pts %,2.137891769
+Graham Scan,10000,10,Circle with min. hull pts %,2.10679698
+Graham Scan,10000,40,Circle with min. hull pts %,1.998803616
+Graham Scan,10000,70,Circle with min. hull pts %,1.890462637
+Graham Scan,10000,100,Circle with min. hull pts %,1.843527317
+Jarvis March,10000,1,Circle with min. hull pts %,0.987597227
+Jarvis March,10000,5,Circle with min. hull pts %,5.013755798
+Jarvis March,10000,10,Circle with min. hull pts %,10.08702946
+Jarvis March,10000,40,Circle with min. hull pts %,45.1589129
+Jarvis March,10000,70,Circle with min. hull pts %,71.75578451
+Jarvis March,10000,100,Circle with min. hull pts %,103.5420873
+Graham Scan,2000,1,Circle with min. hull pts %,0.115938663
+Graham Scan,2000,5,Circle with min. hull pts %,0.100364208
+Graham Scan,2000,10,Circle with min. hull pts %,0.084711075
+Graham Scan,2000,40,Circle with min. hull pts %,0.100240707
+Graham Scan,2000,70,Circle with min. hull pts %,0.08471489
+Graham Scan,2000,100,Circle with min. hull pts %,0.138089418
+Jarvis March,2000,1,Circle with min. hull pts %,0.071222305
+Jarvis March,2000,5,Circle with min. hull pts %,0.184929371
+Jarvis March,2000,10,Circle with min. hull pts %,0.385690689
+Jarvis March,2000,40,Circle with min. hull pts %,1.56824398
+Jarvis March,2000,70,Circle with min. hull pts %,2.77764678
+Jarvis March,2000,100,Circle with min. hull pts %,4.228172779
+Jarvis March,2000,0.5,Circle with min. hull pts %,0.037804842
+Graham Scan,2000,0.5,Circle with min. hull pts %,0.084670305
+Graham Scan,10000,0.5,Circle with min. hull pts %,2.287966251
+Jarvis March,10000,0.5,Circle with min. hull pts %,0.917519
+Jarvis March,20000,1,Circle with min. hull pts %,4.154320955
+Jarvis March,20000,5,Circle with min. hull pts %,22.08248806
+Jarvis March,20000,10,Circle with min. hull pts %,56.39377022
+Jarvis March,20000,40,Circle with min. hull pts %,168.766113
+Jarvis March,20000,70,Circle with min. hull pts %,285.3876572
+Jarvis March,20000,100,Circle with min. hull pts %,438.7776713
+Graham Scan,20000,5,Circle with min. hull pts %,7.187667608
+Graham Scan,20000,10,Circle with min. hull pts %,7.478854418
+Graham Scan,20000,40,Circle with min. hull pts %,11.10263157
+Graham Scan,20000,70,Circle with min. hull pts %,7.139024258
+Graham Scan,20000,100,Circle with min. hull pts %,8.883152962
+Graham Scan,20000,1,Circle with min. hull pts %,7.452325821
+Graham Scan,20000,0.5,Circle with min. hull pts %,7.723029375
+Jarvis March,20000,0.5,Circle with min. hull pts %,2.138825417
+Jarvis March,5000,0.5,Circle with min. hull pts %,0.155024052
+Jarvis March,5000,1,Circle with min. hull pts %,0.263023376
+Jarvis March,5000,5,Circle with min. hull pts %,2.37197566
+Jarvis March,5000,10,Circle with min. hull pts %,2.501000881
+Jarvis March,5000,40,Circle with min. hull pts %,11.34100556
+Jarvis March,5000,70,Circle with min. hull pts %,18.70902801
+Jarvis March,5000,100,Circle with min. hull pts %,25.78702354
+Graham Scan,5000,0.5,Circle with min. hull pts %,0.492022038
+Graham Scan,5000,1,Circle with min. hull pts %,0.521001816
+Graham Scan,5000,5,Circle with min. hull pts %,0.891975641
+Graham Scan,5000,10,Circle with min. hull pts %,0.529020309
+Graham Scan,5000,10,Circle with min. hull pts %,0.891999006
+Graham Scan,5000,10,Circle with min. hull pts %,0.730999708
+Graham Scan,5000,40,Circle with min. hull pts %,0.482027054
+Graham Scan,5000,70,Circle with min. hull pts %,0.481978893
+Graham Scan,5000,100,Circle with min. hull pts %,0.511971951
+Graham Scan,25,,Random Scatter,0.0
+Jarvis March,150,,Random Scatter,0.0
