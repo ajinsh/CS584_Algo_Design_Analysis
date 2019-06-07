@@ -306,7 +306,7 @@ def create_export_files(n,input_choice,timing,min_hull_per):
 	"""
 
 
-	exists = os.path.isfile('analysis/results.csv')
+	exists = os.path.isdir('analysis')
 	if exists:
 		f = open('analysis/results.csv','a',newline='')
 		results = csv.writer(f)
@@ -366,6 +366,10 @@ def show_convex_hull(points, input_choice, timing,percent_pts,size,hull_points =
 	"""Returns plot with parameters from menu screen and saves the plot in /plots
 	directory
 	"""
+	exists = os.path.isdir('plots')
+	if not exists:        
+		os.mkdir('plots')
+
 
 	for each in points:
 		plt.plot(each[0],each[1],'o-')
